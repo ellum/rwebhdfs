@@ -21,7 +21,7 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
   if(!grepl("^https://", url)){
     if(substring(url, 1, 1) != "/")
       url <- paste0(get_webhdfs_home(webhdfs, doas), "/", url)
-    url <- paste0("https://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
+    url <- paste0("https://",webhdfs$host,"/webhdfs/v1",url)
   }
   if(webhdfs$host != "localhost" && grepl("^https://localhost:", url)){
     url <- sub("^https://localhost:", paste0("https://", webhdfs$host, ":"), url)
