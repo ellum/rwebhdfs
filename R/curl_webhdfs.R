@@ -27,7 +27,7 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
     url <- sub("^https://localhost:", paste0("https://", webhdfs$host, ":"), url)
   }
   if(isTRUE(nzchar(webhdfs$user)))
-    url <- paste0(url,"&user.name=", webhdfs$user)
+    #url <- paste0(url,"&user.name=", webhdfs$user)
   if(isTRUE(nzchar(doas)))
     url <- paste0(url,"&doas=",doas)
   
