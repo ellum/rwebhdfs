@@ -26,8 +26,6 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
   if(webhdfs$host != "localhost" && grepl("^https://localhost:", url)){
     url <- sub("^https://localhost:", paste0("https://", webhdfs$host, ":"), url)
   }
-  if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
-    url <- paste0(url,"&token=",webhdfs$token)
   if(isTRUE(nzchar(webhdfs$user)))
     url <- paste0(url,"&user.name=", webhdfs$user)
   if(isTRUE(nzchar(doas)))
@@ -36,6 +34,10 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
   opts <- if(inherits(.opts, "curlOptions")) .opts else curlOptions()
   opts <- curlOptions(..., .opts=opts)
   #Enable Kerberos SPNEGO
+  
+  if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
+    opts[["httpheader"]] <- paste("Bearer ", webhdfs$token)  
+  
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
   
