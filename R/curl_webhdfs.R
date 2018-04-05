@@ -18,13 +18,13 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
     stop("Need a valid webhdfs object: ", webhdfs)
   
   #piece together request URL
-  if(!grepl("^http://", url)){
+  if(!grepl("^https://", url)){
     if(substring(url, 1, 1) != "/")
       url <- paste0(get_webhdfs_home(webhdfs, doas), "/", url)
-    url <- paste0("http://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
+    url <- paste0("https://",webhdfs$host,":",webhdfs$port,"/webhdfs/v1",url)
   }
-  if(webhdfs$host != "localhost" && grepl("^http://localhost:", url)){
-    url <- sub("^http://localhost:", paste0("http://", webhdfs$host, ":"), url)
+  if(webhdfs$host != "localhost" && grepl("^https://localhost:", url)){
+    url <- sub("^https://localhost:", paste0("https://", webhdfs$host, ":"), url)
   }
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
     url <- paste0(url,"&token=",webhdfs$token)
