@@ -36,7 +36,7 @@ curl_webhdfs <- function(webhdfs, url, requestType = c("GET","POST","PUT","DELET
   #Enable Kerberos SPNEGO
   
   if(webhdfs$security && isTRUE(nzchar(webhdfs$token)))
-    opts[["httpheader"]] <- c(Authorization = paste("Bearer ", webhdfs$token) ) 
+    opts[["httpheader"]] <- c(Authorization = paste("Bearer", webhdfs$token) ) 
   
   if(webhdfs$security && is.null(webhdfs$token))
       opts[["username"]] <- ":"
